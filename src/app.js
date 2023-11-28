@@ -1,8 +1,8 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 import dotenv from "dotenv";
-import { database } from './config/index.js';
-import allRouters from './routers/index.js';
+import { database } from "./config/index.js";
+import allRouters from "./routers/index.js";
 
 const APP = express();
 
@@ -15,6 +15,6 @@ APP.use(cors());
 database();
 
 // all routes
-APP.use('/api', allRouters);
+APP.use("/api", allRouters);
 
 export default APP;
