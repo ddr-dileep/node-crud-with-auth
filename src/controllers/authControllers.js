@@ -1,5 +1,5 @@
-import { authModel } from "../../models/index.js";
-import { apiResponse, hashAuth } from "../../utils/index.js";
+import { authModel } from "../models/index.js";
+import { apiResponse, hashAuth } from "../utils/index.js";
 
 export const auth = {
   registerController: async (req, res) => {
@@ -41,7 +41,7 @@ export const auth = {
 
   getUserController: async (req, res) => {
     try {
-      const result = await authModel.findById(req?.params?.id);
+      const result = await authModel.findById(req?.params?.userId);
       if (!result)
         return apiResponse.error(res, 404, { message: "User not found" });
       const user = {
@@ -60,11 +60,11 @@ export const auth = {
 
   deleteUserController: async (req, res) => {
     try {
-      const result = await authModel.findById(req?.params?.id);
+      const result = await authModel.findById(req?.params?.userId);
       if (!result) {
         return apiResponse.error(res, 404, { message: "User already deleted" });
       }
-      await authModel.findOneAndDelete({ _id: req?.params?.id });
+      await authModel.findOneAndDelete({ _id: req?.params?.userId });
       return apiResponse.success(res, 200, {
         message: "User deleted successfully",
       });
@@ -75,7 +75,7 @@ export const auth = {
 
   updateUserController: async (req, res) => {
     try {
-      const result = await authModel.findById(req?.params?.id);
+      const result = await authModel.findById(req?.params?.userId);
       console.log(result, req.body, "User updated successfully");
       if (!result) {
         return apiResponse.error(res, 404, {
@@ -83,7 +83,7 @@ export const auth = {
         });
       }
       const updatedUser = await authModel.findByIdAndUpdate(
-        req?.params?.id,
+        req?.params?.userId,
         { ...req.body },
         {
           new: true,

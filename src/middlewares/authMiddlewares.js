@@ -1,4 +1,4 @@
-import { apiResponse, hashAuth } from "../../utils/index.js";
+import { apiResponse, hashAuth } from "../utils/index.js";
 
 export const authMiddleWare = {
   registerMiddleware: (req, res, next) => {
@@ -31,7 +31,6 @@ export const authMiddleWare = {
         });
       }
 
-      // If all validations pass, proceed to the next middleware or route handler
       next();
     } catch (error) {
       console.error(error);
@@ -41,19 +40,21 @@ export const authMiddleWare = {
 
   authenticateToken: (req, res, next) => {
     const token = req.header("Authorization")?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Unauthorized" });
+    if (!token)
+      return res
+        .status(401)
+        .json({ success: false, message: "Unauthorized access" });
 
     const decoded = hashAuth.verifyToken(token);
-    if (!decoded) return res.status(401).json({ message: "Invalid token" });
-    req.params.id = decoded?.userId;
+    if (!decoded)
+      return res.status(401).json({ success: false, message: "Invalid token" });
+    req.params.userId = decoded?.userId;
     next();
   },
 };
 
 
 const isValidEmail = (email) => {
-  // Implement your email validation logic here
-  // This is a basic example, consider using a library like validator
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };

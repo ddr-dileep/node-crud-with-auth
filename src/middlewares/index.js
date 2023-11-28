@@ -1,2 +1,2 @@
-export { authMiddleWare } from "./auth/authMiddlewares.js";
+export { authMiddleWare } from "./authMiddlewares.js";
 
