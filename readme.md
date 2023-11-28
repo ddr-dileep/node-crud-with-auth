@@ -37,7 +37,7 @@ To start the express server, run the following
 
 ```bash
 
-npm run dev
+yarn run dev
 
 ```
 
